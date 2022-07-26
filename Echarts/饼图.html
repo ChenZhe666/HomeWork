@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- 步骤一：引入echarts文件 -->
+    <script src="./echarts.min.js"></script>
+  </head>
+  <body>
+    <!-- 步骤二：准备一个呈现表格的div -->
+    <div style="width: 600px; height: 400px"></div>
+    <script>
+      //步骤三：初始化echarts实例对象
+      //参数，dom，决定图标最终呈现的位置
+      var myCharts = echarts.init(document.querySelector("div"));
+      var list = [
+        { name: "淘宝", value: 11231 },
+        { name: "京东", value: 22673 },
+        { name: "唯品会", value: 6123 },
+        { name: "1号店", value: 8989 },
+        { name: "聚美优品", value: 6700 },
+      ];
+      // 步骤四：准备配置项
+      option = {
+        series: [
+          {
+            type: "pie",
+            data: list,
+            label: {
+              formatter: function (ary) {
+                return (
+                  ary.name + "平台" + ary.value + "员\n" + ary.percent + "%"
+                );
+              },
+            },
+            // radius:['50%','75%']
+            roseType: "radius",
+            selectedMode:'single'
+          },
+        ],
+      };
+      //步骤五：将配置项设置给echarts实例化对象
+      myCharts.setOption(option);
+    </script>
+  </body>
+</html>
