@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="./echarts.min.js"></script>
+  <script src="./json/jquery.min.js"></script>
+</head>
+<body>
+  <div style="width: 600px;height:400px"></div>
+  <button id="btn1">触发行为</button>
+  <button id="btn2">clear</button>
+  <button id="btn3">setOption</button>
+  <button id="btn4">dispose</button>
+  <script>
+    var mCharts = echarts.init(document.querySelector("div"))
+    var pieData = [
+      {
+        value: 11231,
+        name: "淘宝",
+      },
+      {
+        value: 22673,
+        name: "京东"
+      },
+      {
+        value: 6123,
+        name: "唯品会"
+      },
+      {
+        value: 8989,
+        name: "1号店"
+      },
+      {
+        value: 6700,
+        name: "聚美优品"
+      }
+    ]
+    var pieData1 = [
+      {
+        value: 11231,
+        name: "风雨二哥",
+      },
+      {
+        value: 22673,
+        name: "安安"
+      },
+      {
+        value: 6123,
+        name: "眼底"
+      },
+      {
+        value: 8989,
+        name: "灯塔"
+      },
+      {
+        value: 6700,
+        name: "懒懒憨憨"
+      }
+    ]
+    var option = {
+      legend: {
+        data: ['淘宝', '京东', '唯品会', '1号店', '聚美优品']
+      },
+      tooltip: {
+        show: true
+      },
+      series: [
+        {
+          type: 'pie',
+          data: pieData
+        }
+      ]
+    }
+    var option2 = {
+      legend: {
+        data: ['风雨二哥', '安安', '眼底', '灯塔', '懒懒憨憨']
+      },
+      tooltip: {
+        show: true
+      },
+      series: [
+        {
+          type: 'pie',
+          data: pieData1
+        }
+      ]
+    }
+    mCharts.setOption(option)
+    mCharts.on('click', function (arg) {
+      console.log(arg)
+      console.log('click...')
+    }) // 对事件进行监听
+
+    mCharts.off('click') // 解绑click的事件
+
+    mCharts.on('legendselectchanged', function (arg) {
+      console.log(arg)
+      console.log('legendselectchanged')
+    })
+
+    $('#btn1').click(function () {
+      // 模拟用户的行为
+      mCharts.dispatchAction({
+        type: 'highlight',
+        seriesIndex: 0, // 系列的索引
+        dataIndex: 3 // 数据的索引
+      })
+      mCharts.dispatchAction({
+        type: 'showTip',
+        seriesIndex: 0,
+        dataIndex: 4
+      })
+    })
+
+    $('#btn2').click(function () {
+      // 清空图表的实例
+      mCharts.clear()
+    })
+
+    $('#btn3').click(function () {
+      // 重新设置option 
+      mCharts.setOption(option2)
+    })
+
+    $('#btn4').click(function () {
+      // 销毁mCharts 跟clear有很大区别 销毁了就不能再用setOption显示了，还会报错
+      mCharts.dispose()
+    })
+  </script>
+</body>
+
+</html>
